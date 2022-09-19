@@ -32,8 +32,8 @@
 		<deploy.rtf.memory_reserved>700Mi</deploy.rtf.memory_reserved>
 		<deploy.rtf.memory_max>1200Mi</deploy.rtf.memory_max>
 
-		<anypoint.base_uri>https://eu1.anypoint.mulesoft.com</anypoint.base_uri>
-		<anypoint.platform.analytics_base_uri>https://analytics-ingest.eu1.anypoint.mulesoft.com</anypoint.platform.analytics_base_uri>
+		<anypoint.base_uri>https://anypoint.mulesoft.com</anypoint.base_uri>
+		<anypoint.platform.analytics_base_uri>https://analytics-ingest.anypoint.mulesoft.com</anypoint.platform.analytics_base_uri>
 		<tags/>
 		<categories>[]</categories>
 	</properties>
@@ -264,7 +264,7 @@
 		<repository>
 			<id>anypoint-exchange-v3</id>
 			<name>Anypoint Exchange V3</name>
-			<url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
@@ -298,15 +298,15 @@
 	</pluginRepositories>
 	<distributionManagement>
 		<repository>
-			<id>exchange-harel</id>
+			<id>anypoint-exchange</id>
 			<name>Corporate Repository</name>
-			<url>https://maven.eu1.anypoint.mulesoft.com/api/v2/organizations/${project.groupId}/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v2/organizations/${project.groupId}/maven</url>
 			<layout>default</layout>
 		</repository>
 		<snapshotRepository>
-			<id>exchange-harel</id>
+			<id>anypoint-exchange</id>
 			<name>Corporate Repository</name>
-			<url>https://maven.eu1.anypoint.mulesoft.com/api/v2/organizations/${project.groupId}/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v2/organizations/${project.groupId}/maven</url>
 			<layout>default</layout>
 		</snapshotRepository>
 	</distributionManagement>
