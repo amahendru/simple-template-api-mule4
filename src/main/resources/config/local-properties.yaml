@@ -1,0 +1,13 @@
+api:
+  id:           "12345678"
+  port:         "8081"
+  private:
+    port:       "8092"
+  
+lb:
+  server:
+    keystore:
+      type:         "jks"  
+      path:         "certs/dev-lb-server-keystore.jks"
+      alias:        ""
+

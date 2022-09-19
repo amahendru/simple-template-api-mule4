@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="init-variables" doc:id="60c0cf5f-600c-4d5e-86f1-24fa9cf419b8" >
+		<ee:transform doc:name="attributesOriginal" doc:id="9952f2ce-0618-423c-a6f7-7dc5c44e2786" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="attributesOriginal" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="refDate" doc:id="3e94eccc-12bc-4910-a08d-58970f183062" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="refDate" ><![CDATA[%dw 2.0
+output application/java
+---
+now() >> "UTC"]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="flow_start_ts" doc:id="2e7e730a-b6af-450d-ace4-2e4ec0cfa139" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="flowStartTS" ><![CDATA[%dw 2.0
+import * from dw::util::Timer
+output application/java
+---
+currentMilliseconds() as Number]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="metric-http" doc:id="4f32e2bc-ec22-4aa3-9e15-1edcb0ce54b8" >
+		<logger level="INFO" doc:name="metric_http" doc:id="74862423-23ba-459f-8487-d9d49d452c49" message="#[%dw 2.0&#10;import * from dw::util::Timer&#10;output application/json&#10;---&#10;{&#10;	correlationId: correlationId,&#10;	appName: Mule::p('api.name'),&#10;	version: Mule::p('api.version'),&#10;	remoteAddress: vars.attributesOriginal.remoteAddress,&#10;	requestUri: vars.attributesOriginal.requestUri,&#10;	requestMethod: vars.attributesOriginal.method,&#10;	clientId: vars.attributesOriginal.headers.client_id,&#10;	httpStatus: vars.httpStatus,&#10;	responseTime: ( currentMilliseconds() as Number ) - ( vars.flowStartTS as Number )&#10;}]"/>
+	</flow>
+	
+	<sub-flow name="log-management" doc:id="f9828882-b83f-40a5-9ae9-6310e29f901c" >
+		<async doc:name="Async" doc:id="2447b7d6-c7d9-4d55-992c-944db4349914" >
+			<ee:transform doc:name="Create Final Log Message" doc:id="eae17d97-643f-471b-82fa-6efd8675bd51">
+				<ee:variables >
+					<ee:set-variable resource="dwl/create-final-log-msg.dwl" variableName="logMessage" />
+				</ee:variables>
+					</ee:transform>
+			<choice doc:name="Choice" doc:id="ac5f148e-0dec-4c09-ab85-b8f30944d6f8">
+			<when expression='#[vars.logLevel == "DEBUG"]'>
+				<logger level="DEBUG" doc:name="DEBUG" doc:id="1b202020-2f92-495f-a96c-1d0def12331a" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</when>
+			<when expression='#[vars.logLevel == "INFO"]'>
+				<logger level="INFO" doc:name="INFO" doc:id="0f2df852-9797-40fe-b120-cbfe4d561284" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</when>
+			<when expression='#[vars.logLevel == "WARN"]'>
+				<logger level="WARN" doc:name="WARN" doc:id="ad5afe0e-236a-4b7e-8e93-bc511bcb73da" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</when>
+			<when expression='#[vars.logLevel == "ERROR"]'>
+				<logger level="ERROR" doc:name="ERROR" doc:id="10614913-1b9d-4e7a-8da7-c1d72f976c69" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</when>
+			<when expression='#[vars.logLevel == "TRACE"]'>
+				<logger level="TRACE" doc:name="TRACE" doc:id="82031049-4f8d-4525-a12f-794a1e1a5259" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</when>
+			<when expression='#[vars.logLevel == "METRIC"]'>
+				<logger level="INFO" doc:name="METRIC" doc:id="e8c7f512-dd09-4e07-8709-381c3a5757f0" message="#[vars.logMessage]" category="${mule.logging.prefix}.metric" />
+			</when>
+				<otherwise>
+				<logger level="WARN" doc:name="WARN" doc:id="036dbc72-a075-48a7-af84-4d6451259a8d" message="#[vars.logMessage]" category="${mule.logging.prefix}.logging" />
+			</otherwise>
+		</choice>
+		</async>
+	</sub-flow>
+</mule>

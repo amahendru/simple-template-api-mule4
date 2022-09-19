@@ -1,0 +1,6 @@
+api:
+  name: ${project.artifactId}
+  version: ${project.version}
+mule:
+  logging:
+    prefix: "mule.api.logging.template"

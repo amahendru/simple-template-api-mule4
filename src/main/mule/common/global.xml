@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:cassandra-db="http://www.mulesoft.org/schema/mule/cassandra-db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/cassandra-db http://www.mulesoft.org/schema/mule/cassandra-db/current/mule-cassandra-db.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+    
+	<configuration-properties doc:name="configurationProperties" doc:id="b4422718-3fb5-4c0e-b3cc-2e9874d75cc5" file="config/${mule.env}-properties.yaml" />
+	<configuration-properties doc:name="configurationProperties" doc:id="02162f8a-6ab8-456b-b62a-c6a0fb8d6c7c" file="config/common-properties.yaml" />
+	<global-property doc:name="globalProperty" doc:id="44d8a93b-0d39-495f-bace-07f762d8e98e" name="mule.env" value="local" />
+	<configuration doc:name="configurationErrorHandler" doc:id="f382e0ba-ce29-4871-95e9-d5a4f25e9f7a" defaultErrorHandler-ref="global-error-handler" />
+	<secure-properties:config name="securePropertiesConfig" doc:name="Secure Properties Config" doc:id="776a2f1e-f34e-432a-90c9-6859987e90bf" file="config/${mule.env}-secure-properties.yaml" key="${enc.key}" />
+	<global-property doc:name="globalProperty" doc:id="f0f5199e-623f-4fc2-be65-4e314aebcbc4" name="enc.key" value="mulesoftmulesoft" />
+	<tls:context name="tLSContext" doc:name="TLS Context" doc:id="6fea155f-495f-4509-b06c-da449e836ea4" >
+		<tls:key-store type="${lb.server.keystore.type}" path="${lb.server.keystore.path}" alias="${lb.server.keystore.alias}" keyPassword="${secure::lb.server.keystore.keyPassword}" password="${secure::lb.server.keystore.password}" />
+	</tls:context>
+</mule>

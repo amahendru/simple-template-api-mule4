@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_06aa9db8_2391_45d3_bce2_0659c57b7d5d_Output_Variables_response_error = {|  |}
+

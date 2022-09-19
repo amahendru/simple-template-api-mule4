@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="get-health-check" doc:id="4c13ce35-adc5-438b-8598-e44465d96bba" >
+		<ee:transform doc:name="Create Response Data" doc:id="64650012-6681-4cf0-ad02-b14260a8d467" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: "UP",
+  apiName: Mule::p('api.name'),
+  apiVersion: Mule::p('api.version')
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Set Log Message and Level" doc:id="c4ba45fa-d843-4203-b659-168f7ff37f03">
+				<ee:message>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="logLevel"><![CDATA[//DEBUG ERROR INFO TRACE WARN
+"DEBUG"]]></ee:set-variable>
+				<ee:set-variable variableName="logMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "Health Check Completed",
+	tracepoint: "HEALTH-CHECK"
+}]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		<flow-ref doc:name="log-management" doc:id="32ee64c3-7d1f-41de-955f-a7d47fa8f102" name="log-management" target="LOGSINK" />
+	</flow>
+</mule>
