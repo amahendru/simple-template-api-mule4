@@ -94,8 +94,8 @@ def getNbWorkers (env_name) {
 pipeline {
   agent any
   tools { 
-    maven 'Maven 3.6.3' 
-    jdk 'jdk8' 
+    maven 'M3' 
+    jdk 'JDK8' 
   }
   environment {
     PROJECT_NAME = parseRepoName(GIT_URL)

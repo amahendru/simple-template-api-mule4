@@ -89,7 +89,7 @@ First you need to configure settings.xml file in your Maven Setup (local/jenkins
 
 ```xml
 <server>
-   <id>exchange-harel</id>
+   <id>anypoint-exchange</id>
    <username>~~~Client~~~</username>
    <password>{Connected App Client ID}~?~{Connected App Client Secret}</password>
 </server>
@@ -106,7 +106,7 @@ You can get Connected App Client ID and Secret as follows:
 
 ```xml
 <server>
-   <id>exchange-harel</id>
+   <id>anypoint-exchange</id>
    <username>~~~Client~~~</username>
    <password>d70e5506a7f044af9e9abe68b5795bef~?~6bd8Gh2b00724a048E54436aF15b4bBg</password>
 </server>
@@ -175,7 +175,7 @@ In case you want to overwrite an existing application in Exchange then following
 You can delete an existing application version from Exchange by using the following CURL command:
 
 ```
-curl -X DELETE "https://eu1.anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/<project.artifactId>/<project.version>" \
+curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/<project.artifactId>/<project.version>" \
 -H "authorization: bearer <authorization token>" \
 -H "Content-Type: application/json" \
 -H "X-Delete-Type: hard-delete"
@@ -186,7 +186,7 @@ Please refer to section 'AUTHORIZATION TOKEN FROM CONNECTED APP' on how to obtai
 Example
 
 ```
-curl -X DELETE "https://eu1.anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/harel-sys-mapa-client-api/1.0.0" \
+curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/sys-template-client-api/1.0.0" \
 -H "authorization: bearer xxxxxxxxxxxxxxxxxxxx" \
 -H "Content-Type: application/json" \
 -H "X-Delete-Type: hard-delete"
@@ -202,7 +202,7 @@ mvn clean deploy -DmuleDeploy -Dmule.env=<Mule Runtime Environment> -Danypoint.c
 
 -Dmule.env can be dev, test, preprod, prod
 
--Ddeploy.rtf_platform_name can be harel-non-prod-rtf-01-il for Pre-Prod and harel-prod-rtf-01-il for Production
+-Ddeploy.rtf_platform_name can be non-prod-rtf-01 for Pre-Prod and prod-rtf-01 for Production
 
 -Danypoint.environment can be Development, Test, Pre-Production, Production
 
@@ -213,12 +213,12 @@ mvn clean deploy -DmuleDeploy -Dmule.env=<Mule Runtime Environment> -Danypoint.c
 3. Click on Connected Apps
 4. Copy the Client ID and Secret for App named 'DeployMuleAppsToNonProd' for Non-Production and 'DeployMuleAppsToProd' for Production
 
--Durl.domain can be dev-api-ap.harel-office.com, test-api-ap.harel-office.com, preprod-api-ap.harel-office.com, api-ap.harel-office.com depending on environment
+-Durl.domain can be dev-api.office.com, test-api.office.com, preprod-api.office.com, api.office.com depending on environment
 
 Example
 
 ```bash
-mvn clean deploy -DmuleDeploy -Dmule.env=dev -Danypoint.connected.app.id=159b6596ba0c4936953d04cb3fbb5bac -Danypoint.connected.app.secret=xxxxxxxxxxxxxxxxxxxxxxx -Ddeploy.rtf_platform_name=harel-non-prod-rtf-01-il -Danypoint.environment=Development -Durl.domain=dev-api-ap.harel-office.com
+mvn clean deploy -DmuleDeploy -Dmule.env=dev -Danypoint.connected.app.id=159b6596ba0c4936953d04cb3fbb5bac -Danypoint.connected.app.secret=xxxxxxxxxxxxxxxxxxxxxxx -Ddeploy.rtf_platform_name=non-prod-rtf-01 -Danypoint.environment=Development -Durl.domain=dev-api.office.com
 ```
 
 ### DEPLOY TO RTF (TEST, PREPROD, PROD)
@@ -228,7 +228,7 @@ In development environment normally the deployment follows the standard procedur
 First download the POM (pom.xml) file for the application you want to deploy from Exchange to your local file system by calling following CURL command:
 
 ```
-curl -o ./pom.xml -L "https://eu1.anypoint.mulesoft.com/exchange/files/api/v1/organizations/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/<project.artifactId>/<project.version>/pom?source=Exchange%20API" \
+curl -o ./pom.xml -L "https://anypoint.mulesoft.com/exchange/files/api/v1/organizations/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/<project.artifactId>/<project.version>/pom?source=Exchange%20API" \
 -H "authorization: bearer xxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
@@ -249,7 +249,7 @@ Rest of the parameters are same as used in previous deployment to RTF developmen
 You can issue following CURL command to obtain Authorization Token against a Connected App. Make sure that you have all required permissions assigned to your Connected App for the final purpose.
 
 ```
-curl -L -X POST https://eu1.anypoint.mulesoft.com/accounts/api/v2/oauth2/token \
+curl -L -X POST https://anypoint.mulesoft.com/accounts/api/v2/oauth2/token \
 -H "Content-Type: application/x-www-form-urlencoded" \
 --data-urlencode "client_id=<Connected App Client ID>" \
 --data-urlencode "client_secret=<Connected App Client Secret>" \
