@@ -1,4 +1,4 @@
-# harel-template-api-mule4
+# simple-template-api-mule4
 
 ## TEMPLATE
 
@@ -25,7 +25,7 @@ This project is a simple template that integrates some of MuleSoft best practice
 
 1. In Anypoint Studio, create a new project as File -> New -> Project from Template. In the following screen, select this template from exchange and click Open
 2. The template will be downloaded to your local machine and this can now be used for creating new Implementation project
-3. Rename the Project to correct name as per the naming conventions e.g 'harel-sys-mapa-client-api'
+3. Rename the Project to correct name as per the naming conventions e.g 'sys-client-api'
 4. Open the pom.xml file and adjust the project artifactId, version and name as per new name
 5. In the opened project, right click on project name -> Manage Dependencies -> Manage APIs
 6. Here select the API from exchange and click apply. The scaffolding for the API resources will happen automatically in interface.xml
@@ -108,7 +108,7 @@ You can get Connected App Client ID and Secret as follows:
 <server>
    <id>anypoint-exchange</id>
    <username>~~~Client~~~</username>
-   <password>d70e5506a7f044af9e9abe68b5795bef~?~6bd8Gh2b00724a048E54436aF15b4bBg</password>
+   <password>xxxxxx~?~xxxxxx</password>
 </server>
 ```
 
@@ -175,7 +175,7 @@ In case you want to overwrite an existing application in Exchange then following
 You can delete an existing application version from Exchange by using the following CURL command:
 
 ```
-curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/<project.artifactId>/<project.version>" \
+curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/xxxxxx/<project.artifactId>/<project.version>" \
 -H "authorization: bearer <authorization token>" \
 -H "Content-Type: application/json" \
 -H "X-Delete-Type: hard-delete"
@@ -186,7 +186,7 @@ Please refer to section 'AUTHORIZATION TOKEN FROM CONNECTED APP' on how to obtai
 Example
 
 ```
-curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/dfb0f634-ac3d-4cf6-8063-f34f24fd090f/sys-template-client-api/1.0.0" \
+curl -X DELETE "https://anypoint.mulesoft.com/exchange/api/v2/assets/dxxxxxx/sys-template-client-api/1.0.0" \
 -H "authorization: bearer xxxxxxxxxxxxxxxxxxxx" \
 -H "Content-Type: application/json" \
 -H "X-Delete-Type: hard-delete"
